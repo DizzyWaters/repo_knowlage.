@@ -1,0 +1,450 @@
+Stack:
+Frontend: Next.js + TypeScript
+Backend: NestJS or Next.js API routes for the first version
+Database: PostgreSQL
+Admin panel: custom admin, or Strapi if you need a faster launch
+Hosting: Vercel for frontend + Hetzner/Render/Railway/Fly.io for backend + managed Postgres
+Storage: Cloudflare R2 or S3-compatible storage for images
+CDN / DNS / protection: Cloudflare
+Search / SEO: SSR + metadata + schema markup + sitemap generation
+
+MVP:
+Build these first:
+
+multilingual public pages
+store list + store detail pages
+news/promotions
+pricing tables
+contact/collaboration forms
+admin panel
+social links management
+SEO metadata management
+sitemap generation
+image optimization
+
+Build these second:
+
+loyalty/bonus check
+store-specific promotions
+barcode/account integrations
+push notifications support
+analytics dashboard
+
+Task: Make me step by step plan. And where is the entery point to this project what should I start with.
+Make a global plan, and make a clear first step.
+
+
+Chat-GPT 5.4 Thinking: 
+
+Here’s the right way to approach **the target** so you do not waste time building pieces in the wrong order.
+
+## Global plan
+
+### Phase 1 — define the foundation
+
+This is the real entry point. Not coding yet. First lock down what the system is.
+
+You need to define:
+
+* user roles
+* core business entities
+* page map
+* admin capabilities
+* languages
+* deployment shape
+* MVP boundaries
+
+At this stage, decide:
+
+* Is loyalty included in MVP or postponed?
+* Is admin fully custom or partly CMS-based?
+* Will backend start inside Next.js API or as separate NestJS service?
+* What data must be editable by staff from admin?
+
+This phase produces:
+
+* product scope
+* sitemap
+* feature list
+* data model draft
+* technical architecture draft
+
+Without this, coding is guesswork.
+
+---
+
+### Phase 2 — design the architecture
+
+Once scope is frozen, define the structure of the system.
+
+You should design:
+
+* frontend app structure
+* backend modules
+* database schema
+* admin panel structure
+* media storage approach
+* auth and permissions
+* multilingual content strategy
+* SEO strategy
+
+Main modules will likely be:
+
+* stores
+* pages
+* promotions/news
+* pricing
+* contact forms
+* settings
+* social links
+* media
+* users/admin roles
+* translations
+
+This phase produces:
+
+* folder/module plan
+* DB schema
+* API contracts
+* admin information architecture
+
+---
+
+### Phase 3 — bootstrap the project
+
+Now you create the actual codebase and infrastructure.
+
+Set up:
+
+* monorepo or separate repos
+* Next.js app
+* TypeScript config
+* UI library or component system
+* PostgreSQL
+* ORM like Prisma
+* auth
+* environment variables
+* deployment environments
+* CI/CD
+* linting/formatting
+* basic design tokens
+
+At the end of this phase, the app runs, deploys, connects to DB, and has a base layout.
+
+---
+
+### Phase 4 — build the content backbone first
+
+Before fancy features, build the content engine that powers most of the site.
+
+Implement first:
+
+* global settings
+* language support
+* page SEO fields
+* media upload
+* reusable content sections
+* store entities
+* pricing entities
+* promotions/news entities
+* forms handling
+
+This is where the target starts becoming usable.
+
+---
+
+### Phase 5 — build the public website MVP
+
+Now build the actual public-facing pages.
+
+Order:
+
+1. home page
+2. store list
+3. store detail
+4. promotions/news listing
+5. promotion/news detail
+6. pricing page
+7. contact page
+8. collaboration form
+9. static content pages
+10. sitemap, robots, metadata, schema
+
+The public site should already be fast, indexable, and manageable from admin.
+
+---
+
+### Phase 6 — build the admin MVP
+
+Then make internal operations practical.
+
+Admin should support:
+
+* login
+* role-based access
+* CRUD for stores
+* CRUD for promotions/news
+* CRUD for pricing
+* media management
+* form submissions
+* social links
+* SEO fields
+* translations
+* site settings
+
+This is critical. A good admin panel saves more money than almost any backend trick.
+
+---
+
+### Phase 7 — polish and production hardening
+
+After MVP works, clean it up for real use.
+
+Add:
+
+* validation
+* rate limiting
+* logs
+* monitoring
+* backup plan
+* image optimization
+* caching
+* analytics
+* error tracking
+* security review
+* performance tuning
+
+Do not skip this or the project will feel unstable.
+
+---
+
+### Phase 8 — second-wave features
+
+Only after MVP is stable, add:
+
+* loyalty / bonus check
+* barcode/account integrations
+* store-specific promotions
+* mobile-app-facing APIs
+* push notifications
+* analytics dashboard
+
+These are not the entry point. These come after the content and operations core is stable.
+
+---
+
+## The actual entry point
+
+The real entry point is:
+
+**Start with the data model and system map.**
+
+Not UI.
+Not pages.
+Not database migrations.
+Not deployment.
+
+You first need one document that defines:
+
+* what content exists
+* who manages it
+* where it appears
+* how it connects
+
+That gives you the backbone for both frontend and backend.
+
+If you start building pages first, you will redo them.
+If you start with backend endpoints first, you will redesign them.
+If you start with admin first, you may model the wrong entities.
+
+So the first serious move is:
+
+**Create the project blueprint.**
+
+---
+
+## Clear first step
+
+Your first step should be to create a single document called something like:
+
+**`project-blueprint.md`**
+
+Put these sections in it:
+
+### 1. MVP goal
+
+Write 5–10 lines defining what version 1 must do.
+
+Example:
+
+* multilingual public website
+* store pages
+* pricing display
+* promotions/news
+* forms
+* admin management
+* SEO-ready pages
+
+### 2. User roles
+
+Define:
+
+* visitor
+* admin
+* editor
+* manager
+
+And what each can do.
+
+### 3. Core entities
+
+List the main data models:
+
+* Store
+* StoreHours
+* Promotion
+* NewsPost
+* PricingTable
+* ContactSubmission
+* CollaborationSubmission
+* SocialLink
+* SiteSettings
+* MediaAsset
+* Translation
+* AdminUser
+* SEOFields
+
+### 4. Public pages
+
+List every page you plan to build in MVP:
+
+* home
+* stores
+* store detail
+* promotions/news list
+* promotions/news detail
+* pricing
+* contact
+* collaboration
+* policy/static pages
+
+### 5. Admin modules
+
+List the admin areas:
+
+* dashboard
+* stores
+* promotions/news
+* pricing
+* forms
+* media
+* settings
+* SEO
+* users/roles
+* translations
+
+### 6. Relations between entities
+
+Example:
+
+* one Store has many StoreHours
+* one Promotion may belong to one or many Stores
+* one page has SEO fields
+* one entity has many translations
+
+### 7. Technical decisions
+
+Lock these in:
+
+* Next.js
+* TypeScript
+* PostgreSQL
+* Prisma
+* custom admin
+* Cloudflare
+* Vercel
+* object storage
+
+### 8. MVP vs phase 2
+
+Separate what is in version 1 and what is later.
+
+This one document becomes your source of truth.
+
+---
+
+## What to do immediately after that
+
+Once the blueprint is done, do this in order:
+
+### Step 2
+
+Design the database schema.
+
+### Step 3
+
+Define route structure for public pages and admin.
+
+### Step 4
+
+Define API/module boundaries.
+
+### Step 5
+
+Bootstrap repo and infrastructure.
+
+That is the correct order.
+
+---
+
+## Recommended implementation order
+
+Here is the practical build order I would use:
+
+1. project blueprint
+2. DB schema draft
+3. route map
+4. admin module map
+5. repo setup
+6. auth and roles
+7. Prisma schema and migrations
+8. global layout and i18n setup
+9. settings and SEO system
+10. stores module
+11. pricing module
+12. promotions/news module
+13. forms module
+14. media upload
+15. admin CRUD screens
+16. public pages connected to real data
+17. sitemap / robots / schema
+18. testing and deployment hardening
+19. phase 2 integrations
+
+---
+
+## Very clear first move for you
+
+Tomorrow morning, do this and nothing else until it is finished:
+
+**Write the blueprint with these 4 sections first:**
+
+* MVP scope
+* page list
+* entity list
+* admin module list
+
+That is the clean entry point.
+
+After that, turn the entity list into a PostgreSQL/Prisma schema.
+
+---
+
+## One blunt warning
+
+Do **not** start by “setting up Next.js” just because it feels productive. That is fake progress if the data model is still fuzzy.
+
+The project starts with **structure**, not code.
+
+If you want, I can write the actual **project-blueprint.md** for the target in a clean production-ready format.
+

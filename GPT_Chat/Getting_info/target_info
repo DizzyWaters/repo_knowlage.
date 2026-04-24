@@ -1,0 +1,333 @@
+Resource to check: *** 
+Task description: The bussines asked me as software engineer to make competetive and more cheap website.
+Result: I need to know the technical stack to be able to make same product but fast, using software engineering. Please give everything I need to use
+to complite this task: What programming languge to use, what kind of server is better to use, how can I push this to seatch engines with better aproach,
+how can I link social-networks, what kind of database may i need.
+
+
+Chat_GPT_5.4 response:
+
+
+I checked the site first. Publicly, ***  looks like a custom content-driven retail site**
+, not a standard Shopify/WooCommerce storefront: it has multilingual pages,
+store-detail pages under routes like `/StoreDetail/...`, news pages, bonus-check, collaboration, and contact flows, 
+plus links to Instagram and Telegram from the footer. The homepage also promotes mobile apps on Google Play and the App Store. 
+
+
+My blunt recommendation: **do not rebuild this as WordPress unless the budget is extremely small and the scope will stay simple**. 
+For “same product but fast, cheaper, and competitive,” build a **lean custom web app** with a CMS-like admin, 
+because this business is not a classic ecommerce catalog. It is a chain/store network with changing promotions, store pages, pricing schedules, 
+multilingual content, and customer bonus logic. The existing site structure reflects that. ([***][1])
+
+## What stack to use
+
+### Best practical stack
+
+**Frontend:** Next.js + TypeScript
+**Backend:** NestJS or Next.js API routes for the first version
+**Database:** PostgreSQL
+**Admin panel:** custom admin, or Strapi if you need a faster launch
+**Hosting:** Vercel for frontend + Hetzner/Render/Railway/Fly.io for backend + managed Postgres
+**Storage:** Cloudflare R2 or S3-compatible storage for images
+**CDN / DNS / protection:** Cloudflare
+**Search / SEO:** SSR + metadata + schema markup + sitemap generation
+
+Why this stack:
+
+* **Fast to launch**
+* **Cheap to host**
+* **Easy to hire for**
+* **Good SEO**
+* **Easy to extend later into loyalty, mobile app APIs, store locator, promo calendar, and multilingual content**
+
+## Programming language
+
+Use:
+
+* **TypeScript everywhere**
+* SQL for reporting and database work
+* Optional Python only for analytics/import scripts
+
+Why:
+
+* one language across frontend and backend reduces cost
+* TypeScript is safer than plain JavaScript for a business app
+* easier maintenance for a small team
+
+## Server choice
+
+For this kind of site, you do **not** need a heavy dedicated server on day one.
+
+### Best setup
+
+* **Frontend:** Vercel
+* **Backend/API:** small VPS or platform service
+* **Database:** managed PostgreSQL
+* **Reverse proxy/CDN:** Cloudflare
+
+### If you want the cheapest serious option
+
+* **1 Hetzner VPS**
+* Docker
+* Nginx or Caddy
+* Node.js app
+* PostgreSQL
+* backups to object storage
+
+That is enough for a small-to-mid traffic retail site.
+
+### If you want easiest maintenance
+
+* Vercel + Neon/Supabase + Cloudflare + object storage
+
+That costs a bit more than raw VPS, but saves engineering time.
+
+## Database
+
+Use **PostgreSQL**.
+
+You likely need these entities:
+
+* users
+* bonus accounts / loyalty balances
+* stores
+* store opening hours
+* city / region
+* promotions
+* news posts
+* price tables by day / tier
+* clothing drop-off submissions
+* languages / translations
+* media assets
+* app banners / CTA content
+* social links
+* admin users / audit logs
+
+Why PostgreSQL:
+
+* strong relational model
+* good for reports
+* reliable
+* easy to scale for this size
+* better fit than MongoDB for structured business data
+
+Use **Redis** only if you later need:
+
+* caching
+* rate limiting
+* queues
+* session storage
+
+## Architecture I would build
+
+Keep it simple:
+
+1. **Public website**
+
+   * home
+   * stores
+   * store detail
+   * news/promotions
+   * contact/collaboration
+   * bonus check
+   * multilingual pages
+
+2. **Admin dashboard**
+
+   * manage stores
+   * set opening hours
+   * edit pricing by day/tier
+   * publish news
+   * manage translations
+   * upload banners/images
+   * approve clothing drop-off bonus requests
+   * manage social/app links
+
+3. **API**
+
+   * mobile app support
+   * store and promo data
+   * bonus lookup
+   * loyalty endpoints
+   * content delivery for web and app
+
+That gives you one system serving both website and app.
+
+## SEO: how to push this better in search
+
+The current site has good basic content themes already: stores, news, pricing explanation, contact, 
+    multilingual pages. That is a solid start. ([***][1])
+
+To outperform it, do this:
+
+### Technical SEO
+
+* server-side render all important pages
+* generate **sitemap.xml**
+* add **robots.txt**
+* use canonical tags
+* fix titles and meta descriptions per page
+* make URLs clean and stable
+* compress images and use WebP/AVIF
+* lazy-load non-critical images
+* implement hreflang for **LV / RU / EN**
+* add structured data:
+
+  * Organization
+  * LocalBusiness
+  * Store
+  * FAQ
+  * Article/News
+  * BreadcrumbList
+
+### Content SEO
+
+Create pages for:
+
+* each store location
+* city pages
+* “how pricing works”
+* “bonus program”
+* “what clothing we accept”
+* “weekly delivery days”
+* “second-hand in Riga / Madona / Latvia”
+* promo archive pages
+* FAQ pages
+
+### Local SEO
+
+For every store:
+
+* Google Business Profile
+* exact address
+* opening hours
+* phone
+* map embed
+* photos
+* reviews strategy
+* location schema on page
+
+The site currently exposes store pages and contact details, so a stronger local SEO layer is one of the easiest wins. ([***][1])
+
+## Social network linking
+
+The site already links to Instagram and Telegram in the footer. Build this properly into the new system instead of hardcoding it. ([***][1])
+
+### What to do
+
+* store social links in admin
+* render them in header/footer/contact page
+* add Open Graph and Twitter/X metadata
+* create share cards for news/promotions
+* auto-post new promotions to Telegram/Instagram via scheduler/manual workflow
+* add UTM tracking for all campaign links
+* embed Instagram posts only where useful, not everywhere
+
+### Best practice
+
+Do not rely on social embeds for core content. 
+Search engines and performance both prefer that your important content exists as normal HTML text on your own site.
+
+## Mobile app / loyalty integration
+
+The site already promotes mobile apps, and the App Store listing says the app connects users to the store network and supports barcode-based discounts in-store. 
+That means your web rebuild should be **API-first** even if the website looks simple. ([***][1])
+
+So:
+
+* build website and app on shared APIs
+* keep auth centralized
+* store bonus logic in backend, not frontend
+* log all balance changes
+* add role-based admin permissions
+* make barcode/bonus operations auditable
+
+## What I think the current stack probably is
+
+I cannot prove the exact backend stack from the public pages I could inspect. But based on the route style and page structure, 
+ it looks like a **custom server-rendered site/CMS**, not an obvious off-the-shelf storefront. 
+Treat it as a **custom business web app** when planning your replacement. ([***][1])
+
+## Cheapest good implementation plan
+
+### Option A — best balance
+
+* Next.js
+* TypeScript
+* PostgreSQL
+* Prisma
+* NextAuth or Clerk
+* Cloudflare
+* Vercel
+* S3/R2 storage
+
+### Option B — ultra fast launch
+
+* Next.js frontend
+* Strapi CMS
+* PostgreSQL
+* Cloudflare
+* Vercel + Render
+
+### Option C — lowest hosting cost
+
+* Next.js + NestJS
+* PostgreSQL
+* Docker
+* Nginx
+* Hetzner VPS
+
+## Recommended folder of features for MVP
+
+Build these first:
+
+* multilingual public pages
+* store list + store detail pages
+* news/promotions
+* pricing tables
+* contact/collaboration forms
+* admin panel
+* social links management
+* SEO metadata management
+* sitemap generation
+* image optimization
+
+Build these second:
+
+* loyalty/bonus check
+* store-specific promotions
+* barcode/account integrations
+* push notifications support
+* analytics dashboard
+
+## Final recommendation
+
+If I were engineering this for cost, speed, and future growth, I would use:
+
+**Next.js + TypeScript + PostgreSQL + Prisma + Cloudflare + Vercel + small Node backend/admin**
+
+That is the cleanest answer to your question.
+
+And I would avoid:
+
+* PHP plugin-heavy WordPress builds
+* MongoDB as the main database
+* separate backend/frontend languages for a small team
+* hardcoded social and SEO data
+* rebuilding without a proper admin panel
+
+Here’s the shortest version of the tech decision:
+
+**Language:** TypeScript
+**Frontend:** Next.js
+**Backend:** Node.js/NestJS or Next API
+**Server:** Vercel + small VPS/platform backend
+**Database:** PostgreSQL
+**Cache:** Redis later if needed
+**Storage:** S3/R2
+**SEO:** SSR + schema + sitemap + local SEO
+**Social:** admin-managed links + Open Graph + campaign tracking
+
+I can turn this into a full **technical architecture document with DB schema, API endpoints, and deployment plan**.
+
+
